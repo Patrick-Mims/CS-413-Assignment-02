@@ -11,6 +11,7 @@ public class Network {
     private final JLabel label;
     private final JButton clear_button, reset_button, submit_button;
     private final JPanel panel;
+    private final JTextField textFieldID;
     Network() {
         jframe = new JFrame("Inventory");
         label = new JLabel("Start Homework 1");
@@ -18,6 +19,7 @@ public class Network {
         clear_button = new JButton("Stop");
         reset_button = new JButton("Reset");
         submit_button = new JButton("Go");
+        textFieldID = new JTextField(2);
     }
 
     void launch() {
@@ -55,6 +57,7 @@ public class Network {
         panel.add(reset_button);
         panel.add(submit_button);
         panel.add(label);
+        panel.add(textFieldID);
         jframe.add(panel);
         jframe.setVisible(true);
     }
