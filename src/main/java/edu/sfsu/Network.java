@@ -2,6 +2,8 @@ package edu.sfsu;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Network {
     public GridBagConstraints c;
@@ -14,6 +16,8 @@ public class Network {
         JPanel panel = new JPanel();
 
         jframe.setSize(550, 300);
+        jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
         panel.setLayout(new GridBagLayout());
         /* * * * * * * * * * * * * * * * * * * */
 
@@ -106,6 +110,12 @@ public class Network {
         c.gridwidth = 2;
         c.gridx = 0;
         c.gridy = 6;
+        submitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                label.setText("Queue");
+            }
+        });
         panel.add(submitButton, c);
         jframe.add(panel);
         jframe.setVisible(true);
@@ -125,7 +135,6 @@ public class Network {
         c.fill = GridBagConstraints.HORIZONTAL;
 
         jframe.setSize(400, 500);
-        jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jframe.setLayout(new GridBagLayout());
 
         panel.setBounds(40, 80, 200,200);
