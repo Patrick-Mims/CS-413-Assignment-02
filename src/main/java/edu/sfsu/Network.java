@@ -15,13 +15,13 @@ public class Network {
         JFrame jframe = new JFrame("Inventory");
         JPanel panel = new JPanel();
 
-        jframe.setSize(550, 300);
+        jframe.setSize(350, 300);
         jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         panel.setLayout(new GridBagLayout());
         /* * * * * * * * * * * * * * * * * * * */
 
-        JLabel label = new JLabel("Linked Lists");
+        JLabel label = new JLabel("San Francisco State Inventory");
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.0;
         c.gridwidth = 3;
@@ -29,7 +29,7 @@ public class Network {
         c.gridy = 0;
         panel.add(label, c);
 
-        // first row
+        /* First */
         JLabel id = new JLabel("ID ");
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.0;
@@ -37,14 +37,14 @@ public class Network {
         c.gridy = 1;
         panel.add(id, c);
 
-        JTextField textField = new JTextField(10);
+        JTextField textField = new JTextField(5);
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.0;
         c.gridx = 2;
         c.gridy = 1;
         panel.add(textField, c);
 
-        // second row
+        /* Second */
         JLabel weight = new JLabel("Weight");
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.0;
@@ -52,14 +52,14 @@ public class Network {
         c.gridy = 2;
         panel.add(weight, c);
 
-        JTextField textField2 = new JTextField(10);
+        JTextField textField2 = new JTextField(5);
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.0;
         c.gridx = 2;
         c.gridy = 2;
         panel.add(textField2, c);
 
-        // third row
+        /* Third */
         JLabel sender = new JLabel("Sender");
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.0;
@@ -67,14 +67,14 @@ public class Network {
         c.gridy = 3;
         panel.add(sender, c);
 
-        JTextField textField3 = new JTextField(10);
+        JTextField textField3 = new JTextField(5);
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.0;
         c.gridx = 2;
         c.gridy = 3;
         panel.add(textField3, c);
 
-        // fourth row
+        /* Fourth */
         JLabel receiver = new JLabel("Receiver");
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.0;
@@ -82,13 +82,14 @@ public class Network {
         c.gridy = 4;
         panel.add(receiver, c);
 
-        JTextField textField4 = new JTextField(10);
+        JTextField textField4 = new JTextField(5);
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.0;
         c.gridx = 2;
         c.gridy = 4;
         panel.add(textField4, c);
 
+        /* Fifth */
         JLabel description = new JLabel("Description");
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.0;
@@ -103,7 +104,7 @@ public class Network {
         c.gridy = 5;
         panel.add(textField5, c);
 
-        // button
+        /* Submit Button */
         JButton submitButton = new JButton("Submit");
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.0;
@@ -113,7 +114,7 @@ public class Network {
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                label.setText("Queue");
+                label.setText("Gators");
             }
         });
         panel.add(submitButton, c);
@@ -121,51 +122,3 @@ public class Network {
         jframe.setVisible(true);
     }
 }
-
-        /*
-        JButton reset_button = new JButton("Reset");
-        JButton submit_button = new JButton("Go");
-
-
-        JLabel label = new JLabel("Start Homework 1");
-        JTextField textFieldID = new JTextField(2);
-
-        Border border = BorderFactory.createTitledBorder("Assignment Two");
-
-        c.fill = GridBagConstraints.HORIZONTAL;
-
-        jframe.setSize(400, 500);
-        jframe.setLayout(new GridBagLayout());
-
-        panel.setBounds(40, 80, 200,200);
-        panel.setBorder(border);
-
-        clear_button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                label.setText("Go");
-            }
-        });
-
-        c.weightx = 0.5;
-
-        reset_button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                label.setText("Start Homework 2");
-            }
-        });
-
-        submit_button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                label.setText("Stop");
-            }
-        });
-
-        panel.add(clear_button);
-        panel.add(reset_button);
-        panel.add(submit_button);
-        panel.add(label);
-        panel.add(textFieldID);
-        */
