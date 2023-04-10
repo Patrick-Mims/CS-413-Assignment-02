@@ -16,9 +16,8 @@ public class Network {
     }
 
     void insertRecord(ArrayList<String> items) {
-        System.out.println(items);
         for(String i:items) {
-            System.out.println("items: " + i);
+            System.out.println(i);
         }
     }
 
@@ -123,20 +122,26 @@ public class Network {
         c.gridx = 0;
         c.gridy = 6;
 
-        // Action Listener submits the form
+        // submitButton uses the action listener to call the insertRecord() method
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JOptionPane.showMessageDialog(frame, "New Record Added");
+
+                // add the data to the ArrayList
                 data.add(textField1.getText());
                 data.add(textField2.getText());
                 data.add(textField3.getText());
                 data.add(textField4.getText());
                 data.add(textField5.getText());
+
                 insertRecord(data);
             }
         });
+
         panel.add(submitButton, c);
+
+        // add panel to frame
         frame.add(panel);
         frame.setVisible(true);
     }
