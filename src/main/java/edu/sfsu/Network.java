@@ -1,9 +1,11 @@
 package edu.sfsu;
 
+import java.io.FileWriter;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Network {
@@ -15,14 +17,17 @@ public class Network {
         data = new ArrayList<>();
     }
 
-    void insertRecord(ArrayList<String> items) {
-        for(String i:items) {
-            System.out.println(i);
+    void insertRecord(ArrayList<String> items) throws IOException {
+        FileWriter writer = new FileWriter("output.txt");
+
+        for(String value: items) {
+            writer.write(value + System.lineSeparator());
         }
+        writer.close();
     }
 
     void createUI() {
-        // Instantiate frame and panel objects and initialize size and layout
+        // instantiate frame and panel objects and initialize size and layout
         JFrame frame = new JFrame("Inventory");
         JPanel panel = new JPanel();
 
@@ -30,7 +35,7 @@ public class Network {
         frame.setSize(350, 300);
         panel.setLayout(new GridBagLayout());
 
-        // Create the form. It's verbose but it will do
+        // create the form. It's verbose but it will do
         JLabel label = new JLabel("San Francisco State Inventory");
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.0;
@@ -135,7 +140,11 @@ public class Network {
                 data.add(textField4.getText());
                 data.add(textField5.getText());
 
-                insertRecord(data);
+                try {
+                    insertRecord(data);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
 
