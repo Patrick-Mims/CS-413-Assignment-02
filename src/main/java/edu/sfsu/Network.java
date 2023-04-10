@@ -4,23 +4,34 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class Network {
+    // GridBagConstraints class is used for layout.
     public GridBagConstraints c;
+    public ArrayList<String> data;
     public Network() {
         c = new GridBagConstraints();
+        data = new ArrayList<>();
     }
-    final static boolean fill = true;
-    void launch() {
-        JFrame jframe = new JFrame("Inventory");
+
+    void insertRecord(ArrayList<String> items) {
+        System.out.println(items);
+        for(String i:items) {
+            System.out.println("items: " + i);
+        }
+    }
+
+    void createUI() {
+        // Instantiate frame and panel objects and initialize size and layout
+        JFrame frame = new JFrame("Inventory");
         JPanel panel = new JPanel();
 
-        jframe.setSize(350, 300);
-        jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(350, 300);
         panel.setLayout(new GridBagLayout());
-        /* * * * * * * * * * * * * * * * * * * */
 
+        // Create the form. It's verbose but it will do
         JLabel label = new JLabel("San Francisco State Inventory");
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.0;
@@ -37,12 +48,12 @@ public class Network {
         c.gridy = 1;
         panel.add(id, c);
 
-        JTextField textField = new JTextField(5);
+        JTextField textField1 = new JTextField(5);
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.0;
         c.gridx = 2;
         c.gridy = 1;
-        panel.add(textField, c);
+        panel.add(textField1, c);
 
         /* Second */
         JLabel weight = new JLabel("Weight");
@@ -111,14 +122,22 @@ public class Network {
         c.gridwidth = 2;
         c.gridx = 0;
         c.gridy = 6;
+
+        // Action Listener submits the form
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                label.setText("Gators");
+                JOptionPane.showMessageDialog(frame, "New Record Added");
+                data.add(textField1.getText());
+                data.add(textField2.getText());
+                data.add(textField3.getText());
+                data.add(textField4.getText());
+                data.add(textField5.getText());
+                insertRecord(data);
             }
         });
         panel.add(submitButton, c);
-        jframe.add(panel);
-        jframe.setVisible(true);
+        frame.add(panel);
+        frame.setVisible(true);
     }
 }
