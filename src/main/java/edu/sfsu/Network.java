@@ -1,5 +1,6 @@
 package edu.sfsu;
 
+import java.io.BufferedWriter;
 import java.io.FileWriter;
 import javax.swing.*;
 import java.awt.*;
@@ -17,12 +18,25 @@ public class Network {
         data = new ArrayList<>();
     }
 
+    /**
+     *
+     * @param items
+     * @throws IOException
+     */
     void insertRecord(ArrayList<String> items) throws IOException {
-        FileWriter writer = new FileWriter("output.txt");
+        /*
+        * Test the program by first ensuring the containerInformation.csv file is empty or does not exist.
+        *
+        * */
+        FileWriter writer = new FileWriter("containerInformation.csv", true);
+
+        writer.write(System.lineSeparator());
 
         for(String value: items) {
-            writer.write(value + System.lineSeparator());
+            writer.write(value  + " | ");
         }
+
+        System.out.println(System.getProperty(System.lineSeparator()));
         writer.close();
     }
 
@@ -36,7 +50,7 @@ public class Network {
         panel.setLayout(new GridBagLayout());
 
         // create the form. It's verbose but it will do
-        JLabel label = new JLabel("San Francisco State Inventory");
+        JLabel label = new JLabel("SFSU Inventory App");
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.0;
         c.gridwidth = 3;
@@ -47,6 +61,7 @@ public class Network {
         /* First */
         JLabel id = new JLabel("ID ");
         c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridwidth = 2;
         c.weightx = 0.0;
         c.gridx = 0;
         c.gridy = 1;
@@ -54,14 +69,16 @@ public class Network {
 
         JTextField textField1 = new JTextField(5);
         c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridwidth = 1;
         c.weightx = 0.0;
         c.gridx = 2;
         c.gridy = 1;
         panel.add(textField1, c);
 
         /* Second */
-        JLabel weight = new JLabel("Weight");
+        JLabel weight = new JLabel("Weight (kg)");
         c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridwidth = 2;
         c.weightx = 0.0;
         c.gridx = 0;
         c.gridy = 2;
@@ -69,14 +86,16 @@ public class Network {
 
         JTextField textField2 = new JTextField(5);
         c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridwidth = 1;
         c.weightx = 0.0;
         c.gridx = 2;
         c.gridy = 2;
         panel.add(textField2, c);
 
         /* Third */
-        JLabel sender = new JLabel("Sender");
+        JLabel sender = new JLabel("Name of Sender");
         c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridwidth = 2;
         c.weightx = 0.0;
         c.gridx = 0;
         c.gridy = 3;
@@ -84,14 +103,16 @@ public class Network {
 
         JTextField textField3 = new JTextField(5);
         c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridwidth = 1;
         c.weightx = 0.0;
         c.gridx = 2;
         c.gridy = 3;
         panel.add(textField3, c);
 
         /* Fourth */
-        JLabel receiver = new JLabel("Receiver");
+        JLabel receiver = new JLabel("Name of Receiver");
         c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridwidth = 2;
         c.weightx = 0.0;
         c.gridx = 0;
         c.gridy = 4;
@@ -99,14 +120,16 @@ public class Network {
 
         JTextField textField4 = new JTextField(5);
         c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridwidth = 1;
         c.weightx = 0.0;
         c.gridx = 2;
         c.gridy = 4;
         panel.add(textField4, c);
 
         /* Fifth */
-        JLabel description = new JLabel("Description");
+        JLabel description = new JLabel("Description of contents");
         c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridwidth = 2;
         c.weightx = 0.0;
         c.gridx = 0;
         c.gridy = 5;
@@ -114,13 +137,14 @@ public class Network {
 
         JTextField textField5 = new JTextField(10);
         c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridwidth = 1;
         c.weightx = 0.0;
         c.gridx = 2;
         c.gridy = 5;
         panel.add(textField5, c);
 
         /* Submit Button */
-        JButton submitButton = new JButton("Submit");
+        JButton submitButton = new JButton("Save");
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.0;
         c.gridwidth = 2;
@@ -131,6 +155,30 @@ public class Network {
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if(textField1.getText().equals("") || textField2.getText().equals("") || textField3.getText().equals("") || textField4.getText().equals("") || textField5.getText().equals("")) {
+                    JOptionPane.showMessageDialog(frame, "Error: No data!");
+                } else {
+                    JOptionPane.showMessageDialog(frame, "New Record Added");
+
+                    data.add(textField1.getText());
+                    data.add(textField2.getText());
+                    data.add(textField3.getText());
+                    data.add(textField4.getText());
+                    data.add(textField5.getText());
+
+                    try {
+                        insertRecord(data);
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+
+                textField1.setText("");
+                textField2.setText("");
+                textField3.setText("");
+                textField4.setText("");
+                textField5.setText("");
+                /*
                 JOptionPane.showMessageDialog(frame, "New Record Added");
 
                 // add the data to the ArrayList
@@ -140,17 +188,27 @@ public class Network {
                 data.add(textField4.getText());
                 data.add(textField5.getText());
 
-                try {
-                    insertRecord(data);
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
+                if(!textField1.getText().equals("") || !textField2.getText().equals("") || !textField3.getText().equals("") || !textField4.getText().equals("") || !textField5.getText().equals("")) {
+                    try {
+                        insertRecord(data);
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(frame, "No Data To Enter!");
                 }
+
+                // clear the form after submission
+                textField1.setText("");
+                textField2.setText("");
+                textField3.setText("");
+                textField4.setText("");
+                textField5.setText("");
+                 */
             }
         });
 
         panel.add(submitButton, c);
-
-        // add panel to frame
         frame.add(panel);
         frame.setVisible(true);
     }
