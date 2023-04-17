@@ -1,6 +1,7 @@
 package edu.sfsu;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import javax.swing.*;
 import java.awt.*;
@@ -25,19 +26,38 @@ public class Network {
      */
     void insertRecord(ArrayList<String> items) throws IOException {
         /*
-        * Test the program by first ensuring the containerInformation.csv file is empty or does not exist.
-        *
-        * */
-        FileWriter writer = new FileWriter("containerInformation.csv", true);
+         * Test the program by first ensuring the containerInformation.csv file is empty or does not exist.
+         *
+         * */
 
-        writer.write(System.lineSeparator());
+        try {
 
-        for(String value: items) {
-            writer.write(value  + " | ");
+            File file = new File("containerInformation.csv");
+            FileWriter fileWriter = new FileWriter(file, true);
+
+            if (!file.exists()) {
+                file.createNewFile();
+                // this line will only show once, as it should.
+                fileWriter.write(System.lineSeparator());
+                System.out.println("New file Created");
+                fileWriter.write(" ID | Weight | Name of Sender | Name of Receiver | Description of Contents");
+                System.out.println("Header Created");
+                fileWriter.write(System.lineSeparator());
+                fileWriter.close();
+        } else {
+            //FileWriter writer = new FileWriter(file, true);
+            fileWriter.write(System.lineSeparator());
+
+            for(String value: items) {
+                fileWriter.write(value  + " | ");
+            }
+
+            System.out.println(System.getProperty(System.lineSeparator()));
+            fileWriter.close();
+            }
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
         }
-
-        System.out.println(System.getProperty(System.lineSeparator()));
-        writer.close();
     }
 
     void createUI() {
@@ -156,10 +176,11 @@ public class Network {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(textField1.getText().equals("") || textField2.getText().equals("") || textField3.getText().equals("") || textField4.getText().equals("") || textField5.getText().equals("")) {
-                    JOptionPane.showMessageDialog(frame, "Error: No data!");
+                    JOptionPane.showMessageDialog(frame, "Error: Incomplete.");
                 } else {
-                    JOptionPane.showMessageDialog(frame, "New Record Added");
+                    JOptionPane.showMessageDialog(frame, "New Record Added.");
 
+                    // push each entry into an ArrayList
                     data.add(textField1.getText());
                     data.add(textField2.getText());
                     data.add(textField3.getText());
@@ -171,40 +192,13 @@ public class Network {
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }
+                    // clear the form only when a complete record is submitted.
+                    textField1.setText("");
+                    textField2.setText("");
+                    textField3.setText("");
+                    textField4.setText("");
+                    textField5.setText("");
                 }
-
-                textField1.setText("");
-                textField2.setText("");
-                textField3.setText("");
-                textField4.setText("");
-                textField5.setText("");
-                /*
-                JOptionPane.showMessageDialog(frame, "New Record Added");
-
-                // add the data to the ArrayList
-                data.add(textField1.getText());
-                data.add(textField2.getText());
-                data.add(textField3.getText());
-                data.add(textField4.getText());
-                data.add(textField5.getText());
-
-                if(!textField1.getText().equals("") || !textField2.getText().equals("") || !textField3.getText().equals("") || !textField4.getText().equals("") || !textField5.getText().equals("")) {
-                    try {
-                        insertRecord(data);
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(frame, "No Data To Enter!");
-                }
-
-                // clear the form after submission
-                textField1.setText("");
-                textField2.setText("");
-                textField3.setText("");
-                textField4.setText("");
-                textField5.setText("");
-                 */
             }
         });
 
