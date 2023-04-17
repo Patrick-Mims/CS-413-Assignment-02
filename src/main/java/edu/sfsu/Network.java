@@ -1,22 +1,18 @@
 package edu.sfsu;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
+import java.io.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class Network {
     // GridBagConstraints class is used for layout.
     public GridBagConstraints c;
-    public ArrayList<String> data;
     public Network() {
         c = new GridBagConstraints();
-        data = new ArrayList<>();
+        //data = new ArrayList<>();
     }
 
     /**
@@ -25,38 +21,30 @@ public class Network {
      * @throws IOException
      */
     void insertRecord(ArrayList<String> items) throws IOException {
-        /*
-         * Test the program by first ensuring the containerInformation.csv file is empty or does not exist.
-         *
-         * */
-
+        // Test the program by first ensuring the containerInformation.csv file is empty or does not exist.
         try {
-
             File file = new File("containerInformation.csv");
-            FileWriter fileWriter = new FileWriter(file, true);
 
-            if (!file.exists()) {
+            FileWriter fw = new FileWriter(file, true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            PrintWriter pw = new PrintWriter(bw);
+
+            if(!file.exists()) {
                 file.createNewFile();
-                // this line will only show once, as it should.
-                fileWriter.write(System.lineSeparator());
-                System.out.println("New file Created");
-                fileWriter.write(" ID | Weight | Name of Sender | Name of Receiver | Description of Contents");
-                System.out.println("Header Created");
-                fileWriter.write(System.lineSeparator());
-                fileWriter.close();
-        } else {
-            //FileWriter writer = new FileWriter(file, true);
-            fileWriter.write(System.lineSeparator());
+            }
+
+            pw.println("");
+            pw.print("ID | Weight | Name of Sender | Name of Receiver | Description");
+            pw.println("");
 
             for(String value: items) {
-                fileWriter.write(value  + " | ");
+                pw.print(value  + " | ");
             }
 
-            System.out.println(System.getProperty(System.lineSeparator()));
-            fileWriter.close();
-            }
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
+            pw.close();
+            System.out.println("Data Added");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -178,6 +166,8 @@ public class Network {
                 if(textField1.getText().equals("") || textField2.getText().equals("") || textField3.getText().equals("") || textField4.getText().equals("") || textField5.getText().equals("")) {
                     JOptionPane.showMessageDialog(frame, "Error: Incomplete.");
                 } else {
+                    // Define the ArrayList here so each entry is a fresh set of data
+                    ArrayList<String> data = new ArrayList<>();
                     JOptionPane.showMessageDialog(frame, "New Record Added.");
 
                     // push each entry into an ArrayList
