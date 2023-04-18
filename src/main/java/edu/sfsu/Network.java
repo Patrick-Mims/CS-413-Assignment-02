@@ -23,6 +23,8 @@ public class Network {
     void insertRecord(ArrayList<String> items) throws IOException {
         // Test the program by first ensuring the containerInformation.csv file is empty or does not exist.
         try {
+            String format = "%-20s %5d\n";
+
             File file = new File("containerInformation.csv");
 
             FileWriter fw = new FileWriter(file, true);
@@ -33,12 +35,14 @@ public class Network {
                 file.createNewFile();
             }
 
-            pw.println("");
-            pw.print("ID | Weight | Name of Sender | Name of Receiver | Description");
+            if(file.length() == 0) {
+                pw.print("ID,Weight,Sender,Receiver,Description");
+            }
+
             pw.println("");
 
             for(String value: items) {
-                pw.print(value  + " | ");
+                pw.print(value  + " ,");
             }
 
             pw.close();
