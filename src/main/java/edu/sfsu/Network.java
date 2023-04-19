@@ -20,7 +20,6 @@ import java.util.*;
 public class Network {
     public GridBagConstraints c; // GridBagConstraints class is used for layout.
     public Set<String> data;
-    public int cnt;
     public Network() {
         c = new GridBagConstraints();
         data = new LinkedHashSet<>(); // The LinkedHashSet<>() is used only for checking if a value has or hasn't been added
@@ -54,7 +53,6 @@ public class Network {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        cnt++; // increment the count value
     }
 
     void createUI() {
