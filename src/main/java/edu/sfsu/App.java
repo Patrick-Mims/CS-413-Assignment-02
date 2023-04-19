@@ -10,8 +10,14 @@ public class App {
             @Override
             public void run() {
                 Network network = new Network();
-                network.launch();
+                network.createUI();
             }
         });
     }
 }
+
+/*
+*  Todo:
+*   1. Add the ability to clear the form after submission.
+*   2. Check if record has been added
+* */

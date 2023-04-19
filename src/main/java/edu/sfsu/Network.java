@@ -1,3 +1,9 @@
+/*
+*  Name: Patrick Mims
+*  Date: 04.19.23
+*  CSC413: Erwin
+*  Assignment 2
+* */
 package edu.sfsu;
 
 import java.io.*;
@@ -8,23 +14,14 @@ import java.awt.event.ActionListener;
 import java.util.*;
 
 public class Network {
-    // GridBagConstraints class is used for layout.
-    public GridBagConstraints c;
+    public GridBagConstraints c; // GridBagConstraints class is used for layout.
     public Set<String> data;
     public Network() {
         c = new GridBagConstraints();
-        data = new LinkedHashSet<>();
+        data = new LinkedHashSet<>(); // The LinkedHashSet<>() is used only for checking if a value has or hasn't been added
     }
 
-    //public Set<String> data = new HashSet<String>();
-
-    /**
-     *
-     * @param items
-     * @throws IOException
-     */
     void insertRecord(ArrayList<String> items) throws IOException {
-    //void insertRecord(Set<String> items) throws IOException {
         System.out.println("[items] " + items);
         // Test the program by first ensuring the containerInformation.csv file is empty or does not exist.
         try {
@@ -37,35 +34,26 @@ public class Network {
             if(!file.exists()) {
                 file.createNewFile();
             }
-
+            // Add a header to the file once
             if(file.length() == 0) {
-                pw.print("ID,Weight,Sender,Receiver,Description");
+                pw.print("ID, Weight, Sender, Receiver, Description");
             }
 
             pw.println("");
 
             for (String item : items) {
-                pw.print(item + " ,");
+                pw.print(item + ", ");
             }
-
-            /*
-            while(it.hasNext()) {
-                System.out.println(it.next() + ", ");
-            }
-            for(String value: items) {
-                pw.print(value  + " ,");
-            }
-            */
 
             pw.close();
-            System.out.println("Data Added");
+            System.out.println("Data Added"); // for testing purposes
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
     void createUI() {
-        // instantiate frame and panel objects and initialize size and layout
+        // Instantiate frame and panel objects and initialize size and layout
         JFrame frame = new JFrame("Inventory");
         JPanel panel = new JPanel();
 
@@ -73,7 +61,7 @@ public class Network {
         frame.setSize(350, 300);
         panel.setLayout(new GridBagLayout());
 
-        // create the form. It's verbose but it will do
+        // create the form. It's verbose but it will do for this assignment
         JLabel label = new JLabel("SFSU Inventory App");
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.0;
@@ -174,44 +162,41 @@ public class Network {
         c.gridwidth = 2;
         c.gridx = 0;
         c.gridy = 6;
-
         // submitButton uses the action listener to call the insertRecord() method
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                // If any field is left blank, an error raised and the record won't be entered
                 if(textField1.getText().equals("") || textField2.getText().equals("") || textField3.getText().equals("") || textField4.getText().equals("") || textField5.getText().equals("")) {
                     JOptionPane.showMessageDialog(frame, "Error: Incomplete.");
                 } else {
                     // Define the ArrayList here so each entry is a fresh set of data
                     ArrayList<String> formData = new ArrayList<>();
                     JOptionPane.showMessageDialog(frame, "New Record Added.");
-
-                    // check if checker contains the id
+                    // check if data contains the id, simple console output
                     if(data.contains(textField1.getText())) {
                         System.out.println("Record already exists");
                         System.out.println("Try again");
                     } else {
-                        data.add(textField1.getText());
+                        data.add(textField1.getText()); // if the record doesn't exist, then add it the set
                         formData.add(textField1.getText());
                         formData.add(textField2.getText());
                         formData.add(textField3.getText());
                         formData.add(textField4.getText());
                         formData.add(textField5.getText());
-                    }
-
+                    } // call insertRecord to input the data
                     try {
                         insertRecord(formData);
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
-                    }
-                    // clear the form only when a complete record is submitted.
+                    } // clear the form only when a complete record is submitted.
                     textField1.setText("");
                     textField2.setText("");
                     textField3.setText("");
                     textField4.setText("");
                     textField5.setText("");
                 }
-                }
+            }
         });
 
         panel.add(submitButton, c);
