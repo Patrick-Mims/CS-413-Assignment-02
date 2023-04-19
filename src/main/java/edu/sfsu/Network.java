@@ -5,15 +5,18 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.util.*;
 
 public class Network {
     // GridBagConstraints class is used for layout.
     public GridBagConstraints c;
+    public Set<String> data;
     public Network() {
         c = new GridBagConstraints();
-        //data = new ArrayList<>();
+        data = new LinkedHashSet<>();
     }
+
+    //public Set<String> data = new HashSet<String>();
 
     /**
      *
@@ -21,10 +24,10 @@ public class Network {
      * @throws IOException
      */
     void insertRecord(ArrayList<String> items) throws IOException {
+    //void insertRecord(Set<String> items) throws IOException {
+        System.out.println("[items] " + items);
         // Test the program by first ensuring the containerInformation.csv file is empty or does not exist.
         try {
-            String format = "%-20s %5d\n";
-
             File file = new File("containerInformation.csv");
 
             FileWriter fw = new FileWriter(file, true);
@@ -41,9 +44,18 @@ public class Network {
 
             pw.println("");
 
+            for (String item : items) {
+                pw.print(item + " ,");
+            }
+
+            /*
+            while(it.hasNext()) {
+                System.out.println(it.next() + ", ");
+            }
             for(String value: items) {
                 pw.print(value  + " ,");
             }
+            */
 
             pw.close();
             System.out.println("Data Added");
@@ -171,18 +183,24 @@ public class Network {
                     JOptionPane.showMessageDialog(frame, "Error: Incomplete.");
                 } else {
                     // Define the ArrayList here so each entry is a fresh set of data
-                    ArrayList<String> data = new ArrayList<>();
+                    ArrayList<String> formData = new ArrayList<>();
                     JOptionPane.showMessageDialog(frame, "New Record Added.");
 
-                    // push each entry into an ArrayList
-                    data.add(textField1.getText());
-                    data.add(textField2.getText());
-                    data.add(textField3.getText());
-                    data.add(textField4.getText());
-                    data.add(textField5.getText());
+                    // check if checker contains the id
+                    if(data.contains(textField1.getText())) {
+                        System.out.println("Record already exists");
+                        System.out.println("Try again");
+                    } else {
+                        data.add(textField1.getText());
+                        formData.add(textField1.getText());
+                        formData.add(textField2.getText());
+                        formData.add(textField3.getText());
+                        formData.add(textField4.getText());
+                        formData.add(textField5.getText());
+                    }
 
                     try {
-                        insertRecord(data);
+                        insertRecord(formData);
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }
@@ -193,7 +211,7 @@ public class Network {
                     textField4.setText("");
                     textField5.setText("");
                 }
-            }
+                }
         });
 
         panel.add(submitButton, c);
