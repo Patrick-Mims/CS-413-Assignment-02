@@ -3,6 +3,10 @@
 *  Date: 04.19.23
 *  CSC413: Erwin
 *  Assignment 2
+*  Notes: The program works according to the spec.
+*
+*  Changes: The confirmation in step 10, I used a dialog box to alert the
+*  user the information has been entered.
 * */
 package edu.sfsu;
 
@@ -16,13 +20,13 @@ import java.util.*;
 public class Network {
     public GridBagConstraints c; // GridBagConstraints class is used for layout.
     public Set<String> data;
+    public int cnt;
     public Network() {
         c = new GridBagConstraints();
         data = new LinkedHashSet<>(); // The LinkedHashSet<>() is used only for checking if a value has or hasn't been added
     }
 
     void insertRecord(ArrayList<String> items) throws IOException {
-        System.out.println("[items] " + items);
         // Test the program by first ensuring the containerInformation.csv file is empty or does not exist.
         try {
             File file = new File("containerInformation.csv");
@@ -50,6 +54,7 @@ public class Network {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+        cnt++; // increment the count value
     }
 
     void createUI() {
@@ -62,13 +67,21 @@ public class Network {
         panel.setLayout(new GridBagLayout());
 
         // create the form. It's verbose but it will do for this assignment
-        JLabel label = new JLabel("SFSU Inventory App");
+        JLabel label = new JLabel("Inventory Record Count: ");
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.0;
-        c.gridwidth = 3;
-        c.gridx = 0;
+        c.gridwidth = 2;
+        c.gridx = 1;
         c.gridy = 0;
         panel.add(label, c);
+
+        JLabel count = new JLabel(" " + cnt);
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.weightx = 0.0;
+        c.gridwidth = 1;
+        c.gridx = 2;
+        c.gridy = 0;
+        panel.add(count, c);
 
         /* First */
         JLabel id = new JLabel("ID ");
@@ -175,8 +188,8 @@ public class Network {
                     JOptionPane.showMessageDialog(frame, "New Record Added.");
                     // check if data contains the id, simple console output
                     if(data.contains(textField1.getText())) {
-                        System.out.println("Record already exists");
-                        System.out.println("Try again");
+                        // Notify the user that a record already exists.
+                        JOptionPane.showMessageDialog(frame, "A record with this ID already exists.");
                     } else {
                         data.add(textField1.getText()); // if the record doesn't exist, then add it the set
                         formData.add(textField1.getText());
