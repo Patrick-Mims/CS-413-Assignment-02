@@ -67,21 +67,13 @@ public class Network {
         panel.setLayout(new GridBagLayout());
 
         // create the form. It's verbose but it will do for this assignment
-        JLabel label = new JLabel("Inventory Record Count: ");
+        JLabel label = new JLabel("SFSU Inventory Record System");
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.0;
-        c.gridwidth = 2;
-        c.gridx = 1;
+        c.gridwidth = 3;
+        c.gridx = 0;
         c.gridy = 0;
         panel.add(label, c);
-
-        JLabel count = new JLabel(" " + cnt);
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.weightx = 0.0;
-        c.gridwidth = 1;
-        c.gridx = 2;
-        c.gridy = 0;
-        panel.add(count, c);
 
         /* First */
         JLabel id = new JLabel("ID ");
@@ -183,26 +175,25 @@ public class Network {
                 if(textField1.getText().equals("") || textField2.getText().equals("") || textField3.getText().equals("") || textField4.getText().equals("") || textField5.getText().equals("")) {
                     JOptionPane.showMessageDialog(frame, "Error: Incomplete.");
                 } else {
-                    // Define the ArrayList here so each entry is a fresh set of data
-                    ArrayList<String> formData = new ArrayList<>();
-                    JOptionPane.showMessageDialog(frame, "New Record Added.");
-                    // check if data contains the id, simple console output
+                    ArrayList<String> formData = new ArrayList<>(); // Define the ArrayList here so each entry is a fresh set of data
+
+                    JOptionPane.showMessageDialog(frame, "New Record Added."); // check if data contains the id, simple console output
+
                     if(data.contains(textField1.getText())) {
-                        // Notify the user that a record already exists.
-                        JOptionPane.showMessageDialog(frame, "A record with this ID already exists.");
+                        JOptionPane.showMessageDialog(frame, "A record with this ID already exists."); // Notify the user that a record already exists.
                     } else {
-                        data.add(textField1.getText()); // if the record doesn't exist, then add it the set
+                        data.add(textField1.getText()); // If the record doesn't exist, then add it the set
                         formData.add(textField1.getText());
                         formData.add(textField2.getText());
                         formData.add(textField3.getText());
                         formData.add(textField4.getText());
                         formData.add(textField5.getText());
-                    } // call insertRecord to input the data
+                    } // Call insertRecord to input the data
                     try {
                         insertRecord(formData);
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
-                    } // clear the form only when a complete record is submitted.
+                    } // Clear the form only when a complete record is submitted.
                     textField1.setText("");
                     textField2.setText("");
                     textField3.setText("");
